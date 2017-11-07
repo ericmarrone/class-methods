@@ -27,9 +27,17 @@ class Book
 
 
   #INSTANCE METHODS
-  # def borrow
-  #
-  # end
+  def borrow
+
+  end
+
+  def return_to_library
+
+  end
+
+  def lent_out?
+
+  end
 
 
   #CLASS METHODS
@@ -38,12 +46,26 @@ class Book
     new_book = Book.new(title, author, isbn)
     @@on_shelf << new_book
     return new_book
+  end
 
+  def self.available
+    @@on_shelf
 
   end
 
-  def self.books_on_loan
-    @@on_shelf
+  def self.current_due_date
+
+  end
+
+  def self.overdue_books
+
+  end
+
+  def self.browse
+
+  end
+
+  def self.borrowed
 
   end
 
@@ -52,4 +74,4 @@ end
 
 
 p Book.create("hello", "eric", 123)
-p Book.books_on_loan
+p Book.available
