@@ -2,11 +2,12 @@ class Book
   @@on_shelf = []
   @@on_loan = []
 
+
   def initialize(title, author, isbn)
     @title = title
     @author = author
     @isbn = isbn
-
+    @due_date = nil
   end
 
 
@@ -26,21 +27,27 @@ class Book
   end
 
 
-  #INSTANCE METHODS
-  def borrow
+  #INSTANCE and CLASS METHODS
 
+  def lent_out?
+    if @@on_loan.include?(self)
+      return true
+    else
+      return false
+    end
   end
 
   def return_to_library
-
+    if lent_out?
+      @@on_loan.delete(self)
+      @@on_shelf << self
+      self.due_date = nil
+      return true
+    else
+      return false
+    end
   end
 
-  def lent_out?
-
-  end
-
-
-  #CLASS METHODS
 
   def self.create(title, author, isbn)
     new_book = Book.new(title, author, isbn)
@@ -54,24 +61,60 @@ class Book
   end
 
   def self.current_due_date
-
+    @@on_loan.each do |book|
+      book.due_date = Time.now + (60 * 60 * 24 * 3)
+    end
   end
 
-  def self.overdue_books
-
-  end
-
-  def self.browse
+  def borrow
+    if lent_out?
+      return false
+    else
+      @@on_shelf.delete(self)
+      @@on_loan << self
+      self.class.current_due_date
+      return true
+    end
 
   end
 
   def self.borrowed
+    @@on_loan
+  end
 
+  def self.overdue
+    overdue_books = []
+    @@on_loan.each do |book|
+      if book.due_date < Time.now
+        overdue_books << book
+      else
+      end
+    end
+    return overdue_books
+  end
+
+  def self.browse
+    @@on_shelf.sample
   end
 
 
 end
 
 
-p Book.create("hello", "eric", 123)
-p Book.available
+book1 = Book.create("hello", "eric", 100)
+book2 = Book.create("goodbye", "eric", 12322)
+# p Book.available
+#
+# p Book.browse
+book1.borrow
+book1.due_date = Time.now - (60 * 60 * 24 * 2)
+# p book1.lent_out?
+p book1.inspect
+# # p Book.borrowed
+# # p Book.available
+# p book1.return_to_library.inspect
+# book1.return_to_library
+# p book1.inspect
+# p Book.borrowed
+# p Book.available
+p Book.overdue

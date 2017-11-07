@@ -31,7 +31,7 @@ class BankAccount
   def withdraw(number)
     @balance -= number
   end
-
+  
   def self.create
     new_account = BankAccount.new
     @@accounts << new_account
