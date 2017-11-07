@@ -64,6 +64,7 @@ class Book
     @@on_loan.each do |book|
       book.due_date = Time.now + (60 * 60 * 24 * 3)
     end
+    return Time.now + (60 * 60 * 24 * 3)
   end
 
   def borrow
@@ -101,20 +102,40 @@ class Book
 end
 
 
-book1 = Book.create("hello", "eric", 100)
-book2 = Book.create("goodbye", "eric", 12322)
-# p Book.available
-#
-# p Book.browse
-book1.borrow
-book1.due_date = Time.now - (60 * 60 * 24 * 2)
-# p book1.lent_out?
-p book1.inspect
+# book1 = Book.create("hello", "eric", 100)
+# book2 = Book.create("goodbye", "eric", 12322)
+# # p Book.available
+# #
+# # p Book.browse
+# book1.borrow
+# book1.due_date = Time.now - (60 * 60 * 24 * 2)
+# # p book1.lent_out?
+# p book1.inspect
+# # # p Book.borrowed
+# # # p Book.available
+# # p book1.return_to_library.inspect
+# # book1.return_to_library
+# # p book1.inspect
 # # p Book.borrowed
 # # p Book.available
-# p book1.return_to_library.inspect
-# book1.return_to_library
-# p book1.inspect
-# p Book.borrowed
-# p Book.available
-p Book.overdue
+# p Book.overdue
+
+sister_outsider = Book.create("Sister Outsider", "Audre Lorde", "9781515905431")
+aint_i = Book.create("Ain't I a Woman?", "Bell Hooks", "9780896081307")
+if_they_come = Book.create("If They Come in the Morning", "Angela Y. Davbis", "0893880221")
+puts Book.browse.inspect
+puts Book.browse.inspect
+puts Book.available.inspect
+puts Book.borrowed.inspect
+puts sister_outsider.lent_out?
+puts sister_outsider.borrow
+puts sister_outsider.lent_out?
+puts sister_outsider.borrow
+puts sister_outsider.due_date
+puts Book.available.inspect
+puts Book.borrowed.inspect
+puts Book.overdue.inspect
+puts sister_outsider.return_to_library
+puts sister_outsider.lent_out?
+puts Book.available.inspect
+puts Book.borrowed.inspect
