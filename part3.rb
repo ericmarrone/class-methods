@@ -63,7 +63,7 @@ class Zombie
   end
 
   def self.spawn
-    rand(@@plague_level).times do
+    rand(3..@@plague_level).times do
       zombie = Zombie.new(rand(@@max_speed), rand(@@max_strength))
       @@horde << zombie
     end
